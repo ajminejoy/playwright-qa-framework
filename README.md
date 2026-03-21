@@ -88,6 +88,7 @@ Given more time, I would:
 ---
 
 ## Additional Notes
+Due to dynamic scheduling behavior in the staging environment (calendar and time slot availability), some test steps may require additional stabilization (e.g., improved synchronization or retry logic) to achieve full consistency.
 
 Part 1 (Test Design) and Part 2/3 (API & Security) are submitted separately as documents.
 

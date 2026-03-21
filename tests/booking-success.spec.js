@@ -48,7 +48,5 @@ test.describe('Ezra Booking Flow - Success Path', () => {
     await packageDetailsPage.assertLocation(bookingData.preferredLocationText);
     await packageDetailsPage.assertActiveStatus();
     await packageDetailsPage.assertPaymentPaidFull();
-
-    // console.log({ selectedDate, selectedTimes });
   });
 });

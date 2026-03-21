@@ -7,11 +7,9 @@ const { getUniqueMember, bookingData } = require('../data/testData');
 const { declinedCard } = require('../data/stripeCards');
 
 test.describe('Ezra Booking Flow - Payment Failure', () => {
-  test('Verify booking is not created when payment is declined', async ({ page }) => {
+  test('Verify booking is not created when payment is declined', async ({ page, context }) => {
     const loginPage = new LoginPage(page);
     const membersPage = new MembersPage(page);
-    const bookingPage = new PackageBookingPage(page);
-    const paymentPage = new PaymentPage(page);
 
     const member = getUniqueMember();
 
@@ -25,17 +23,26 @@ test.describe('Ezra Booking Flow - Payment Failure', () => {
     await membersPage.assertMembersPageLoaded();
     await membersPage.createMember(member);
     await membersPage.assertMemberCreated();
-    await membersPage.openMemberByEmail(member.email);
+
+    const memberPage = await membersPage.openNewestMember(context);
+
+    const bookingPage = new PackageBookingPage(memberPage);
+    const paymentPage = new PaymentPage(memberPage);
 
     await bookingPage.clickAddNewPackage();
-    await bookingPage.selectPrimaryScan(bookingData.primaryScan);
+    await bookingPage.selectAnyAvailableScan();
+    await bookingPage.continueToScheduling();
+
     await bookingPage.selectLocation(bookingData.preferredLocationText);
-    await bookingPage.selectFirstAvailableTimeSlot();
+    await bookingPage.selectFirstAvailableDate();
+    await bookingPage.selectThreeTimeSlotsForOneDate();
+
+    await bookingPage.continueToPayment();
 
     await paymentPage.fillStripeCard(declinedCard);
     await paymentPage.submitPayment();
 
     await paymentPage.assertPaymentErrorVisible();
-    await expect(page.getByText(/payment paid full/i)).not.toBeVisible();
+    await expect(memberPage.getByText(/payment paid full/i)).not.toBeVisible();
   });
 });
