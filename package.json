@@ -1,0 +1,23 @@
+{
+  "name": "playwrightautomationproject",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:success": "playwright test tests/booking-success.spec.js",
+    "test:declined": "playwright test tests/booking-payment-declined.spec.js",
+    "test:details": "playwright test tests/booking-package-details.spec.js",
+    "report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}
