@@ -28,7 +28,7 @@ class MembersPage {
     await expect(this.modalTitle).toBeVisible();
   }
 
-  async selectSex(value = 'Male') {
+  async selectGender(value = 'Male') {
     await this.sexDropdown.click();
     await this.page.getByRole('option', { name: value, exact: true }).click();
   }
